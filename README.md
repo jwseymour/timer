@@ -1,9 +1,45 @@
 # PomodoroUp
 
-A count-up work timer: run past a target on purpose when you're mid-task, and
-the amount you overran smoothly reshapes your next break (grows, capped) and
-next work target (dips, then eases back to normal for very large overruns).
-Lives in the macOS menu bar.
+[![CI](https://github.com/jwseymour/timer/actions/workflows/ci.yml/badge.svg)](https://github.com/jwseymour/timer/actions/workflows/ci.yml)
+![Platform](https://img.shields.io/badge/platform-macOS%2014%2B-lightgrey)
+![Swift](https://img.shields.io/badge/Swift-5.10-orange)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+A macOS menu bar work timer for people who don't want to be interrupted
+mid-flow. Instead of a hard stop, it **counts up**: run past your target on
+purpose, and the amount you overran smoothly reshapes your next break (longer,
+capped) and next work target (shorter, then easing back to normal for very
+large overruns).
+
+## Features
+
+- **Count-up timer in the menu bar** with a live progress ring and elapsed time
+- **Adaptive breaks and targets** driven by a tunable overrun curve
+- **Presets**, each with its own target, break, and curve constants
+- **Draggable curve editor** for shaping the adjustment curves visually
+- **Global hotkey** (⌃⌥Space) to start, stop, or skip a break from any app
+- **Session history** persisted with SwiftData, in its own window by design
+- **Sleep-safe engine**: wall-clock anchored, so it self-heals across sleep or missed ticks
+
+## How the adjustment works
+
+With overrun ratio `r = overrun / target`:
+
+- **Next target** = `target − target·kt·r·e^(−r/p)` — dips, peaks around `r = p`,
+  then recovers, so one huge overrun never cripples the next session.
+- **Next break** = `break + cap·(1 − e^(−r/q))` — grows fast, then saturates at
+  `break + cap`.
+
+Adjustments are always derived from the fixed baseline, never from the previous
+adjusted value, so repeated overruns can't compound into permanent drift. The
+math lives in a pure, dependency-free module
+(`Sources/PomodoroFormula/AdjustmentFormula.swift`) with its own unit tests.
+
+## Tech
+
+Swift 5.10 · SwiftUI · SwiftData · Swift Package Manager · XCTest · GitHub Actions CI.
+The timer engine takes injectable clock and sound abstractions, so its state
+machine is tested deterministically with a fake clock (34 tests total).
 
 ## Running it
 
