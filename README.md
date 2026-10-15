@@ -11,6 +11,10 @@ purpose, and the amount you overran smoothly reshapes your next break (longer,
 capped) and next work target (shorter, then easing back to normal for very
 large overruns).
 
+<p align="center">
+  <img src="docs/screenshot-timer.png" alt="PomodoroUp timer window mid-session" width="600">
+</p>
+
 ## Features
 
 - **Count-up timer in the menu bar** with a live progress ring and elapsed time
