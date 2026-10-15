@@ -12,7 +12,7 @@ capped) and next work target (shorter, then easing back to normal for very
 large overruns).
 
 <p align="center">
-  <img src="docs/screenshot-timer.png" alt="PomodoroUp timer window mid-session" width="600">
+  <img src="docs/screenshot-curve-editor.png" alt="PomodoroUp curve editor: draggable control points reshape how overruns adjust the next work target and break" width="420">
 </p>
 
 ## Features
